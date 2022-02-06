@@ -9,6 +9,7 @@ function ChatContainer() {
 
   const joinRoom = () => {
     if (username !== "" && roomID !== "") {
+      socket.emit("join_room", roomID);
     }
   };
 
@@ -25,7 +26,7 @@ function ChatContainer() {
         placeholder="Room ID...."
         onChange={(event) => SetRoomID(event.target.value)}
       />
-      <button>Join A Room</button>
+      <button onClick={joinroom}>Join A Room</button>
     </div>
   );
 }
