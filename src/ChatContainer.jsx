@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import io from "socket.io-client";
+import Chat from "./Chat";
 
-const socket = io.connect("/http://localhost:3001");
+const socket = io.connect("http://localhost:3001");
 
 function ChatContainer() {
   const [username, SetUsername] = useState("");
@@ -11,6 +12,7 @@ function ChatContainer() {
     if (username !== "" && roomID !== "") {
       socket.emit("join_room", roomID);
     }
+    // with socket that emit in this situation we are passing
   };
 
   return (
@@ -26,7 +28,8 @@ function ChatContainer() {
         placeholder="Room ID...."
         onChange={(event) => SetRoomID(event.target.value)}
       />
-      <button onClick={joinroom}>Join A Room</button>
+      <button onClick={joinRoom}>Join A Room</button>
+      <Chat socket={socket} username={username} roomID={roomID} />
     </div>
   );
 }
