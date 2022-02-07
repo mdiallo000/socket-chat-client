@@ -3,7 +3,7 @@ import "./App.css";
 
 function Chat({ socket, username, roomId }) {
   const [currentMessage, SetMessage] = useState("");
-
+  const [ListMessage, setList] = useState([]);
   let today = new Date();
   let time = today.getHours() + ":" + today.getMinutes();
 
