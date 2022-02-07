@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./App.css";
 
 function Chat({ socket, username, roomId }) {
   const [currentMessage, SetMessage] = useState("");
@@ -25,16 +26,19 @@ function Chat({ socket, username, roomId }) {
   }, [socket]);
 
   return (
-    <div>
-      <div>
+    <div className="chat-window">
+      <div className="chat-header">
         <p>Live</p>
       </div>
-      <div></div>
-      <div>
+      <div className="chat-body"></div>
+
+      {/* Gonna put a chat body here  */}
+      <div className="chat-footer">
         <input
           onChange={(e) => {
             SetMessage(e.target.value);
           }}
+          value={currentMessage}
           type="text"
           placeholder="Type..."
         />
