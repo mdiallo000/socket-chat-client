@@ -1,22 +1,28 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Chat({ socket, username, roomId }) {
   const [currentMessage, SetMessage] = useState("");
+
+  let today = new Date();
+  let time = today.getHours() + ":" + today.getMinutes();
+
   const SendMessage = async () => {
     if (currentMessage !== "") {
       const MessageData = {
         room: roomId,
         message: currentMessage,
         author: username,
-        Time:
-          new Date(Date.now()).getHours() +
-          ":" +
-          new Date(Date.now().getMinutes()),
+        Time: time,
       };
 
       await socket.emit("send_message", MessageData);
     }
   };
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      console.log(data);
+    });
+  }, [socket]);
 
   return (
     <div>
