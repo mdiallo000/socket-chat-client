@@ -21,7 +21,7 @@ function Chat({ socket, username, roomId }) {
   };
   useEffect(() => {
     socket.on("receive_message", (data) => {
-      console.log(data);
+      setList((list) => [...list, data]);
     });
   }, [socket]);
 
@@ -30,7 +30,11 @@ function Chat({ socket, username, roomId }) {
       <div className="chat-header">
         <p>Live</p>
       </div>
-      <div className="chat-body"></div>
+      <div className="chat-body">
+        {ListMessage.map((msg) => {
+          return <h1>{msg.message}</h1>;
+        })}
+      </div>
 
       {/* Gonna put a chat body here  */}
       <div className="chat-footer">
