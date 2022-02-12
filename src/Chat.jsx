@@ -1,14 +1,15 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
+import React, { useEffect, useState } from 'react';
+import './App.css';
+import io from 'socket.io-client';
 
 function Chat({ socket, username, roomId }) {
-  const [currentMessage, SetMessage] = useState("");
+  const [currentMessage, SetMessage] = useState('');
   const [ListMessage, setList] = useState([]);
   let today = new Date();
-  let time = today.getHours() + ":" + today.getMinutes();
+  let time = today.getHours() + ':' + today.getMinutes();
 
   const SendMessage = async () => {
-    if (currentMessage !== "") {
+    if (currentMessage !== '') {
       const MessageData = {
         room: roomId,
         message: currentMessage,
@@ -16,11 +17,15 @@ function Chat({ socket, username, roomId }) {
         Time: time,
       };
 
-      await socket.emit("send_message", MessageData);
+      await socket.emit('send_message', MessageData);
+      setList((list) => [...list, MessageData]);
+      SetMessage('');
     }
   };
+
   useEffect(() => {
-    socket.on("receive_message", (data) => {
+    socket.on('receive_message', (data) => {
+      console.log(data);
       setList((list) => [...list, data]);
     });
   }, [socket]);
